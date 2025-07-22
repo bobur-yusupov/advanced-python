@@ -1,8 +1,12 @@
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
-from rest_framework.viewsets import GenericViewSet
-from .models import Book, Author
-from .serializers import AuthorSerializer
+from rest_framework import viewsets
+from .models import Author, Book, Genre
+from .serializers import AuthorSerializer, BookSerializer
 
-class AuthorViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
