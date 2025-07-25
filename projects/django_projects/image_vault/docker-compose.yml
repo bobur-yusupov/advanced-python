@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  server:
+    build: .
+    container_name: server_app
+    command: uvicorn config.asgi:application --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
+    image: postgres:latest
+    container_name: db_container
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: image_vault
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.db/dev:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+  
+  celery:
+    build: .
+    container_name: celery_worker
+    command: celery -A config worker --loglevel=INFO
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - rabbitmq
+    env_file:
+      - .env
+  
+  celery_beat:
+    build: .
+    container_name: celery_beat
+    command: celery -A config beat --loglevel=INFO
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - rabbitmq
+    env_file:
+      - .env
+
+volumes:
+  db_data:
+  rabbitmq_data:
