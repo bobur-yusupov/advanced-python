@@ -13,10 +13,9 @@ def process_image(image_id):
         image = Image.open(image_path)
         image = image.resize((800, 800))
         image.save(image_path)
-    
+
     except Exception as e:
         pass
-    
+
     instance.processed = True
     instance.save()
-    

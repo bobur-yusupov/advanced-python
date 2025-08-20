@@ -51,4 +51,3 @@ factorial(10)
 # Function with 2 int arguments which returns their sum
 def add(a: int, b: int) -> int:
     return a + b
-    

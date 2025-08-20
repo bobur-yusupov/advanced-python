@@ -19,7 +19,7 @@ def cpu_bound_task(n):
 
     for i in range(n):
         result += i * i
-    
+
     return result
 
 

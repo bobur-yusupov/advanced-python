@@ -15,11 +15,11 @@ async def fetch_url(session, url):
 
             print(f"Fetched {url} in {end_time - start_time:.4f} seconds")
             return content
-        
+
     except Exception as e:
         print(f"Error fetching {url}: {e}")
         return None
-    
+
 
 async def main():
     """
@@ -36,7 +36,7 @@ async def main():
         tasks = [fetch_url(session, url) for url in urls]
         results = await asyncio.gather(*tasks)
         return results
-    
+
 if __name__ == "__main__":
     start_time = time.time()
     results = asyncio.run(main())

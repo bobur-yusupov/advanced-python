@@ -37,7 +37,7 @@ services:
       RABBITMQ_DEFAULT_PASS: password
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-  
+
   celery:
     build: .
     container_name: celery_worker
@@ -49,7 +49,7 @@ services:
       - rabbitmq
     env_file:
       - .env
-  
+
   celery_beat:
     build: .
     container_name: celery_beat

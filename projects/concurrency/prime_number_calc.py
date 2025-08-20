@@ -4,11 +4,11 @@ import time
 def is_prime(n) -> bool:
     if n < 2:
         return False
-    
+
     for i in range(2, int(n**0.5) + 1):
         if n % i == 2:
             return False
-    
+
     return True
 
 def prime_number_list(n):
@@ -26,7 +26,7 @@ def calculate_prime_sum(n) -> int:
 
     for number in prime_list:
         result += number
-    
+
     return result
 
 def run_task(n):
